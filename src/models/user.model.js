@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt-nodejs')
 const httpStatus = require('http-status')
 const APIError = require('../utils/APIError')
-const mailSender = require('../services/sendgrid')
 const Schema = mongoose.Schema
 
 const roles = [
@@ -34,11 +33,7 @@ const userSchema = new Schema({
   },
   active: {
     type: Boolean,
-    default: false
-  },
-  connected: {
-    type: Boolean,
-    default: false
+    default: true
   },
   role: {
     type: String,
@@ -64,9 +59,6 @@ userSchema.pre('save', async function save (next) {
 })
 
 userSchema.post('save', async function saved (doc, next) {
-  if (this.active)
-    return
-  return mailSender.mailCreateAccount(next, this.email, this.activationKey);
 })
 
 userSchema.method({
@@ -104,14 +96,6 @@ userSchema.statics = {
     return err
   },
 
-  async listUsers () {
-    const users = await this.find({}).exec()
-    if (!users) throw new APIError(`No users found`, httpStatus.NOT_FOUND)
-
-    return ({ users: users })
-  },
-
-
   async findAndGenerateToken (payload) {
     const { email, password } = payload
     if (!email) throw new APIError('Email must be provided for login')
@@ -127,29 +111,6 @@ userSchema.statics = {
 
     return user
   },
-
-  async findAndRecoverPassword (payload) {
-    const { email } = payload
-    if (!email) throw new APIError('Email must be provided for login')
-
-    const user = await this.findOne({ email }).exec()
-    if (!user) throw new APIError(`No user associated with ${email}`, httpStatus.NOT_FOUND)
-
-    if (!user.active) throw new APIError(`User not activated`, httpStatus.UNAUTHORIZED)
-
-    return user
-  },
-
-  async findAndRecoverPasswordFinal (payload) {
-    const { activationKey } = payload
-
-    const user = await this.findOne({ activationKey }).exec()
-    if (!user) throw new APIError(`No user associated with ${email}`, httpStatus.NOT_FOUND)
-
-    if (!user.active) throw new APIError(`User not activated`, httpStatus.UNAUTHORIZED)
-
-    return user
-  }
 }
 
 module.exports = mongoose.model('User', userSchema)
