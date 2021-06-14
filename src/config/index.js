@@ -8,8 +8,9 @@ module.exports = {
   secret: process.env.APP_SECRET,
   hostname: process.env.HOSTNAME,
   frontUrl: process.env.FRONTURL,
+  mongoPickeat: process.env.MONGOURI_PICKEAT,
   mongo: {
-    uri: process.env.MONGOURI,
-    testURI: process.env.MONGOTESTURI
+    uri: process.env.MONGOURI_BACKOFFICE,
+    testURI: process.env.MONGOURI_BACKOFFICE
   },
 }

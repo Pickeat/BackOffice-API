@@ -17,19 +17,30 @@ if (config.env === 'dev') {
   mongoose.set('debug', true)
 }
 
-exports.connect = () => {
-  console.log("Env=", config.env)
-  var mongoURI = (config.env === 'prod' || 'dev' ? config.mongo.uri : config.mongo.testURI)
+console.log("Env=", config.env)
+var mongoURI = (config.env === 'prod' || 'dev' ? config.mongo.uri : config.mongo.testURI)
 
-  console.log(mongoURI);
-  mongoose.connect(mongoURI, {
-    keepAlive: 1,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+console.log(mongoURI);
+  // mongoose.connect(mongoURI, {
+  //   keepAlive: 1,
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true
+  // })
 
-  mongoose.set('useCreateIndex', true)
-  mongoose.set('useFindAndModify', false);
+mongoose.backoffice_conn = mongoose.createConnection(config.mongo.uri, {
+  keepAlive: 1,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
 
-  return mongoose.connection
-}
+mongoose.pickeat_conn = mongoose.createConnection(config.mongoPickeat, {
+  keepAlive: 1,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
+
+mongoose.set('useFindAndModify', false);
+
+module.exports = mongoose

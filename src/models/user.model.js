@@ -1,5 +1,5 @@
 'use strict'
-const mongoose = require('mongoose')
+const mongoose = require('../services/mongoose')
 const bcrypt = require('bcrypt-nodejs')
 const httpStatus = require('http-status')
 const APIError = require('../utils/APIError')
@@ -43,6 +43,8 @@ const userSchema = new Schema({
 }, {
   timestamps: true
 })
+
+
 
 userSchema.pre('save', async function save (next) {
   try {
@@ -112,5 +114,4 @@ userSchema.statics = {
     return user
   },
 }
-
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.backoffice_conn.model('User', userSchema)
