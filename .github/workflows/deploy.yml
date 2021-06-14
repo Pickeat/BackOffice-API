@@ -1,0 +1,21 @@
+name: 'Publish new release'
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish-api:
+    name: publish back office api
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish to Registry
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: api
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          tags: 'latest'
