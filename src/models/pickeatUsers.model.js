@@ -9,7 +9,7 @@ const pickeatUsersSchema = new Schema({
 
 pickeatUsersSchema.statics = {
     async listUsers () {
-        const usersList =  await this.find({})
+        const usersList = await this.find({})
         return (usersList)
     },
 }

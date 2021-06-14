@@ -2,9 +2,9 @@
 
 const express = require('express')
 const router = express.Router()
-const productsController = require('../../controllers/pickeatUsers.controller')
+const pickeatUsersController = require('../../controllers/pickeatUsers.controller')
 const auth = require('../../middlewares/authorization')
 
-router.get('/list', auth(['admin']), productsController.getProducts)
+router.get('/list', auth(['user', 'admin']), pickeatUsersController.getUsers)
 
 module.exports = router
