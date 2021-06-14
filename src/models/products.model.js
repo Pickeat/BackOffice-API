@@ -1,5 +1,5 @@
 'use strict'
-const mongoose = require('mongoose')
+const mongoose = require('../services/mongoose')
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
@@ -9,10 +9,9 @@ const productSchema = new Schema({
 
 productSchema.statics = {
     async listProducts () {
-        const res =  await this.find({})
-        console.log(res)
-       return ("hello")
+        const productsList =  await this.find({})
+       return (productsList)
     },
 }
 
-module.exports = mongoose.model('Announce', productSchema)
+module.exports = mongoose.pickeat_conn.model('Announce', productSchema)
