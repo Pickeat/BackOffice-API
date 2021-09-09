@@ -4,8 +4,7 @@ const Schema = mongoose.Schema
 
 const pickeatUsersSchema = new Schema({
 
-}, {
-})
+}, {strict: false})
 
 pickeatUsersSchema.statics = {
     async listUsers () {
@@ -25,6 +24,12 @@ pickeatUsersSchema.statics = {
     async registeredUsersNumber () {
         const usersList = await this.find({status: "registered"})
         return (usersList.length)
+    },
+    async editUser (body, id) {
+        const productsList =  await this.findOneAndUpdate({_id: id}, body, {upsert: false, new: true}, function (err, res) {
+            console.log(res)
+        })
+        return (productsList)
     }
 }
 

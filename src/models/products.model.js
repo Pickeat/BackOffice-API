@@ -3,9 +3,8 @@ const mongoose = require('../services/mongoose')
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
+}, { strict: false })
 
-}, {
-})
 
 productSchema.statics = {
     async listProducts () {
@@ -43,6 +42,13 @@ productSchema.statics = {
         return (productsList.length)
     },
 
+    async editProduct (body, id) {
+        console.log(body)
+        const productsList =  await this.findOneAndUpdate({_id: id}, body, {upsert: false, new: true}, function (err, res) {
+            console.log(res)
+        })
+        return (productsList)
+    },
 }
 
 module.exports = mongoose.pickeat_conn.model('Announce', productSchema)

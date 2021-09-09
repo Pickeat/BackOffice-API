@@ -10,3 +10,12 @@ exports.getProducts = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.editProduct = async (req, res, next) => {
+    try {
+        const ret = await Products.editProduct(req.body, req.params.id);
+        return res.json(ret)
+    } catch (error) {
+        next(error)
+    }
+}

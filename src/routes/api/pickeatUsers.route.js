@@ -6,5 +6,6 @@ const pickeatUsersController = require('../../controllers/pickeatUsers.controlle
 const auth = require('../../middlewares/authorization')
 
 router.get('/list', auth(['user', 'admin']), pickeatUsersController.getUsers)
+router.post('/edit/:id', auth(['user', 'admin']), pickeatUsersController.editUsers)
 
 module.exports = router

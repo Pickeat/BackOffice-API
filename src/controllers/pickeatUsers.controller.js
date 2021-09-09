@@ -10,3 +10,12 @@ exports.getUsers = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.editUsers = async (req, res, next) => {
+    try {
+        const ret = await PickeatUsers.editUser(req.body, req.params.id);
+        return res.json(ret)
+    } catch (error) {
+        next(error)
+    }
+}
