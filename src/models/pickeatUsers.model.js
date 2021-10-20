@@ -26,10 +26,19 @@ pickeatUsersSchema.statics = {
         return (usersList.length)
     },
     async editUser (body, id) {
-        const productsList =  await this.findOneAndUpdate({_id: id}, body, {upsert: false, new: true}, function (err, res) {
+        const ret =  await this.findOneAndUpdate({_id: id}, body, {upsert: false, new: true}, function (err, res) {
             console.log(res)
         })
-        return (productsList)
+        return (ret)
+    },
+    async editPictureLink (image, id) {
+        let user = await this.findById(id)
+        let userInfos = JSON.parse(JSON.stringify(user))
+        userInfos["image"] = image
+        const ret =  await this.findOneAndUpdate({_id: id}, userInfos, {upsert: false, new: true}, function (err, res) {
+            console.log(res)
+        })
+        return (ret)
     }
 }
 
