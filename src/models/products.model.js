@@ -49,6 +49,16 @@ productSchema.statics = {
         })
         return (productsList)
     },
+    async editPictureLink (image, id) {
+        let product = await this.findById(id)
+        let productInfos = JSON.parse(JSON.stringify(product))
+        console.log(product)
+        productInfos["image"] = image
+        const ret =  await this.findOneAndUpdate({_id: id}, productInfos, {upsert: false, new: true}, function (err, res) {
+            console.log(res)
+        })
+        return (ret)
+    }
 }
 
 module.exports = mongoose.pickeat_conn.model('Announce', productSchema)

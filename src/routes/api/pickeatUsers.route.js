@@ -4,7 +4,6 @@ const express = require('express')
 const router = express.Router()
 const pickeatUsersController = require('../../controllers/pickeatUsers.controller')
 const auth = require('../../middlewares/authorization')
-
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
