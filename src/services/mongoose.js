@@ -43,6 +43,12 @@ mongoose.pickeat_conn = mongoose.createConnection(config.mongoPickeat, {
   useCreateIndex: true
 });
 
+mongoose.deleteds_conn = mongoose.createConnection("mongodb://pickeat:password@api.pickeat.fr:27017/deleted?authSource=admin&authMechanism=SCRAM-SHA-256&readPreference=primary&appname=MongoDB%20Compass&ssl=false", {
+  keepAlive: 1,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+});
 mongoose.set('useFindAndModify', false);
 
 module.exports = mongoose

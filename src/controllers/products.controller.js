@@ -23,6 +23,16 @@ exports.editProduct = async (req, res, next) => {
         next(error)
     }
 }
+
+exports.deleteProduct = async (req, res, next) => {
+    try {
+        const ret = await Products.deleteProduct(req.params.id);
+        return res.json(ret)
+    } catch (error) {
+        next(error)
+    }
+}
+
 exports.editProductPicture = async (req, res, next) => {
     try {
         if (!req.file || !req.params.id) {

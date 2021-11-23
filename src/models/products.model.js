@@ -5,7 +5,6 @@ const Schema = mongoose.Schema
 const productSchema = new Schema({
 }, { strict: false })
 
-
 productSchema.statics = {
     async listProducts () {
         const productsList =  await this.find({})
@@ -49,10 +48,20 @@ productSchema.statics = {
         })
         return (productsList)
     },
+
+    async deleteProduct (id) {
+        console.log(id)
+        const productsList =  await this.findById(id)
+        console.log(productsList)
+        productsList.remove()
+        //const swap = new (mongoose.deleteds_conn.model('Announce'))(productsList)
+        //swap.save()
+        return (productsList)
+    },
+
     async editPictureLink (image, id) {
         let product = await this.findById(id)
         let productInfos = JSON.parse(JSON.stringify(product))
-        console.log(product)
         productInfos["image"] = image
         const ret =  await this.findOneAndUpdate({_id: id}, productInfos, {upsert: false, new: true}, function (err, res) {
             console.log(res)

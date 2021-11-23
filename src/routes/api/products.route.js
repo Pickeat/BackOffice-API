@@ -10,5 +10,5 @@ const upload = multer({ dest: 'uploads/' });
 router.get('/list', auth(['user', 'admin']), productsController.getProducts)
 router.post('/edit/:id', auth(['users', 'admin']), productsController.editProduct)
 router.post('/edit/product_picture/:id', auth(['user', 'admin']), upload.single('file'), productsController.editProductPicture)
-
+router.delete('/delete/:id', auth(['user', 'admin']), productsController.deleteProduct)
 module.exports = router

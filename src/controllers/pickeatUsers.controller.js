@@ -25,6 +25,7 @@ exports.editUsers = async (req, res, next) => {
 }
 
 exports.editProfilePicture = async (req, res, next) => {
+    console.log(req.file)
     try {
         if (!req.file) {
             res.status(401)
